@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using Xamarin.Forms;
+
 
 namespace XamarinPruebas
 {
-	public partial class App : Application
+    using Xamarin.Forms;
+    using Views;
+    public partial class App : Application
 	{
 		public App ()
 		{
 			InitializeComponent();
 
-			MainPage = new XamarinPruebas.MainPage();
+			MainPage = new MainView();
 		}
 
 		protected override void OnStart ()

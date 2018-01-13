@@ -5,12 +5,29 @@
     x:Class="XamarinPruebas.Views.MainView"
     BindingContext="{Binding Main, Source={StaticResource Locator}}">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Xamarin Pruebas"
+        <StackLayout
+            Padding="20,30,20,10">
+            <Label                             
+                Text="Xamarin Pruebas"
                 FontSize="Large"
-                FontAttributes="Bold"
+                FontAttributes="Italic"
                 HorizontalOptions="Center">
             </Label>
+            <Label
+                Text="Amount:">
+            </Label>
+            <Entry Placeholder="Enter the amount to convert">
+            </Entry>
+            <Label Text="Source rate:">
+            </Label>
+            <Picker 
+                Title="Select a source rate">
+            </Picker>
+            <Label Text="Source rate:">
+            </Label>
+            <Picker 
+                Title="Select a source rate">
+            </Picker>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
