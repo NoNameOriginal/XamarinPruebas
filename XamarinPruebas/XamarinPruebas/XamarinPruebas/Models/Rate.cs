@@ -1,8 +1,10 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace XamarinPruebas.Models
 {
-    public class Rate
+    public class Class1
     {
         public int RateId { get; set; }
 

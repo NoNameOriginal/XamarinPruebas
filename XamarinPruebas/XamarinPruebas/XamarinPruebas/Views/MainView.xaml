@@ -25,7 +25,7 @@
             </Label>
             <Picker
                 ItemDisplayBinding="{Binding Name}"
-                ItemSource="{Binding Rates}"
+                ItemsSource="{Binding Rates}"
                 SelectedItem="{Binding SourceRate, Mode=TwoWay}"
                 Title="Select a source rate">
             </Picker>
@@ -33,7 +33,7 @@
             </Label>
             <Picker
                 ItemDisplayBinding="{Binding Name}"
-                ItemSource="{Binding Rates}"
+                ItemsSource="{Binding Rates}"
                 SelectedItem="{Binding TargetRate, Mode=TwoWay}"
                 Title="Select a target rate">
             </Picker>
