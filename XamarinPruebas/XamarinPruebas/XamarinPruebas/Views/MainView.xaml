@@ -5,9 +5,15 @@
     x:Class="XamarinPruebas.Views.MainView"
     BindingContext="{Binding Main, Source={StaticResource Locator}}"
     >
+    <ContentPage.Padding>
+        <OnPlatform 
+            x:TypeArguments="Thickness"
+            iOS="20,30,20,10"
+            Android="20,10,20,10">
+        </OnPlatform>
+    </ContentPage.Padding>
     <ContentPage.Content>
-        <StackLayout
-            Padding="20,30,20,10">
+        <StackLayout>
             <Label
                 FontAttributes="Italic"
                 FontSize="Large"

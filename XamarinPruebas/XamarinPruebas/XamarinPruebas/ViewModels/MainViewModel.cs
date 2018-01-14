@@ -3,11 +3,23 @@
     using GalaSoft.MvvmLight.Command;
     using System.Windows.Input;
     using System.Collections.ObjectModel;
+    using System;
     using Models;
-    public class MainViewModel
+    using System.ComponentModel;
+    using System.Net.Http;
+
+    public class MainViewModel : INotifyPropertyChanged
     {
+        #region Events
+        public event PropertyChangedEventHandler PropertyChanged;
+        #endregion
+
+        #region Attributes
+        bool _isRunning;
+        string _result;
+        #endregion
         #region Properties
-        public String Amount {
+        public string Amount {
             get;
             set;
         }
@@ -24,17 +36,41 @@
             set;
         }
         public bool IsRunning {
-            get;
-            set;
+            get
+            {
+                return _isRunning;
+            }
+            set
+            {
+                if(_isRunning != value)
+                {
+                    _isRunning = value;
+                    PropertyChanged?.Invoke(
+                        this,
+                        new PropertyChangedEventArgs(nameof(IsRunning)));               
+                }
+            }
         }
         public bool IsEnabled
         {
             get;
             set;
         }
-        public String Result {
-            get;
-            set;
+        public string Result {
+            get
+            {
+                return _result;
+            }
+            set
+            {
+                if (_result != value)
+                {
+                    _result = value;
+                    PropertyChanged?.Invoke(
+                        this,
+                        new PropertyChangedEventArgs(nameof(Result)));
+                }
+            }
         }
         #endregion
         #region Commands
@@ -43,15 +79,37 @@
                  return new RelayCommand(Convert); 
                 }
         }
+
         void Convert()
         {
             throw new NotImplementedException();
         }
         #endregion
+        #region Constructors
         public MainViewModel()
         {
-            
+            LoadRates();
         }
+
+        void LoadRates()
+        {
+            IsRunning = true;
+            Result = "Loading Rates...";
+            try
+            {
+                var client = new HttpClient();
+                client.BaseAddress = new Uri("http://apiexchangerates.azurewebsites.net");
+                var controller = "/api/Rates";
+
+            }
+            catch (Exception ex)
+            {
+                IsRunning = false;
+                Result = ex.Message;
+
+            }
+        }
+        #endregion
 
     }
 }
