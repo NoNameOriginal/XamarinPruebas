@@ -3,31 +3,63 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="XamarinPruebas.Views.MainView"
-    BindingContext="{Binding Main, Source={StaticResource Locator}}">
+    BindingContext="{Binding Main, Source={StaticResource Locator}}"
+    >
     <ContentPage.Content>
         <StackLayout
             Padding="20,30,20,10">
-            <Label                             
-                Text="Xamarin Pruebas"
-                FontSize="Large"
+            <Label
                 FontAttributes="Italic"
-                HorizontalOptions="Center">
+                FontSize="Large"
+                HorizontalOptions="Center"
+                Text="Xamarin Pruebas">
             </Label>
             <Label
                 Text="Amount:">
             </Label>
-            <Entry Placeholder="Enter the amount to convert">
+            <Entry
+                Text="{Binding Amount, Mode=TwoWay}"
+                Placeholder="Enter the amount to convert">
             </Entry>
             <Label Text="Source rate:">
             </Label>
-            <Picker 
+            <Picker
+                ItemDisplayBinding="{Binding Name}"
+                ItemSource="{Binding Rates}"
+                SelectedItem="{Binding SourceRate, Mode=TwoWay}"
                 Title="Select a source rate">
             </Picker>
             <Label Text="Source rate:">
             </Label>
-            <Picker 
-                Title="Select a source rate">
+            <Picker
+                ItemDisplayBinding="{Binding Name}"
+                ItemSource="{Binding Rates}"
+                SelectedItem="{Binding TargetRate, Mode=TwoWay}"
+                Title="Select a target rate">
             </Picker>
+            <ActivityIndicator
+                IsRunning="{Binding IsRunning, Mode=TwoWay}">
+            </ActivityIndicator>
+            <Button
+                Command="{Binding ConvertCommand}"
+                BackgroundColor="Navy"
+                BorderRadius="20"
+                HeightRequest="40"
+                FontAttributes="Bold"
+                IsEnabled="{Binding isEnabled, Mode=TwoWay}"
+                Text="Convert"
+                TextColor="White">
+            </Button>
+            <Label
+                BackgroundColor="Silver"
+                FontSize="Large"     
+                HorizontalTextAlignment="Center"
+                Margin="0,10"
+                Text="{Binding Result,Mode=TwoWay}"
+                TextColor="Black"
+                VerticalTextAlignment="Center"
+                VerticalOptions="FillAndExpand">
+            </Label>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
