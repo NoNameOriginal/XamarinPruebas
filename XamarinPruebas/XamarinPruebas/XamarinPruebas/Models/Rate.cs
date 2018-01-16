@@ -8,8 +8,12 @@ namespace XamarinPruebas.Models
 
         public string Code { get; set; }
 
-        public int TaxRate { get; set; }
+        public float TaxRate { get; set; }
 
         public string Name { get; set; }
+
+        public string FullData {
+            get { return this.Name + " [" + this.Code + "]"; }
+        }
     }
 }

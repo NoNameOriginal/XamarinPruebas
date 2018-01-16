@@ -1,12 +1,18 @@
 ﻿namespace XamarinPruebas.ViewModels
 {
-    using GalaSoft.MvvmLight.Command;
-    using System.Windows.Input;
-    using System.Collections.ObjectModel;
     using System;
-    using Models;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Net.Http;
+    using System.Threading.Tasks;
+    using System.Windows.Input;
+    using GalaSoft.MvvmLight.Command;
+    using Models;
+    using Newtonsoft.Json;
+    using Xamarin.Forms;
+    using System.Diagnostics;
+
 
     public class MainViewModel : INotifyPropertyChanged
     {
@@ -16,7 +22,9 @@
 
         #region Attributes
         bool _isRunning;
+        bool _isEnabled;
         string _result;
+        ObservableCollection<Rate> _rates;
         #endregion
         #region Properties
         public string Amount {
@@ -24,8 +32,20 @@
             set;
         }
         public ObservableCollection<Rate> Rates {
-            get;
-            set;
+            get
+            {
+                return _rates;
+            }
+            set
+            {
+                if (_rates != value)
+                {
+                    _rates = value;
+                    PropertyChanged?.Invoke(
+                        this,
+                        new PropertyChangedEventArgs(nameof(Rates)));
+                }
+            }
         }
         public Rate SourceRate {
             get;
@@ -51,10 +71,21 @@
                 }
             }
         }
-        public bool IsEnabled
-        {
-            get;
-            set;
+        public bool IsEnabled{
+            get
+            {
+                return _isEnabled;
+            }
+            set
+            {
+                if (_isEnabled != value)
+                {
+                    _isEnabled = value;
+                    PropertyChanged?.Invoke(
+                        this,
+                        new PropertyChangedEventArgs(nameof(IsEnabled)));
+                }
+            }
         }
         public string Result {
             get
@@ -74,15 +105,59 @@
         }
         #endregion
         #region Commands
-        public ICommand ConvertCommand {
-            get {
-                 return new RelayCommand(Convert); 
-                }
-        }
-
-        void Convert()
+        public ICommand ConvertCommand
         {
-            throw new NotImplementedException();
+            get {
+                //return new Command(() => Debug.WriteLine("Command executed"));
+                return new RelayCommand(Convert); 
+            }
+        }
+        
+        async void Convert()
+        {
+            if (string.IsNullOrEmpty(Amount))
+            {
+                await Application.Current.MainPage.DisplayAlert(
+                    "ERROR",
+                    "You must enter a value in amount.",
+                    "Accept");
+                return;
+            }
+            decimal amount = 0;
+            if (!decimal.TryParse(Amount, out amount))
+            {
+                await Application.Current.MainPage.DisplayAlert(
+                    "ERROR",
+                    "You must enter a numeric value in amount.",
+                    "Accept");
+                return;
+            }
+            if (SourceRate == null)
+            {
+                await Application.Current.MainPage.DisplayAlert(
+                    "ERROR",
+                    "You must selec a source rate.",
+                    "Accept");
+                return;
+            }
+            if (TargetRate == null)
+            {
+                await Application.Current.MainPage.DisplayAlert(
+                    "ERROR",
+                    "You must selec a target rate.",
+                    "Accept");
+                return;
+            }
+            var amountConverted = amount /
+                                (decimal)SourceRate.TaxRate * 
+                                (decimal)TargetRate.TaxRate;
+            
+            Result = string.Format(
+                "{0} {1:C2} = {2} {3:C2}",
+                SourceRate.Code,
+                amount,
+                TargetRate.Code,
+                amountConverted);
         }
         #endregion
         #region Constructors
@@ -91,22 +166,35 @@
             LoadRates();
         }
 
-        void LoadRates()
+        async void LoadRates()
         {
             IsRunning = true;
             Result = "Loading Rates...";
             try
             {
-                var client = new HttpClient();
-                client.BaseAddress = new Uri("http://apiexchangerates.azurewebsites.net");
+                var client = new HttpClient
+                {
+                    BaseAddress = new Uri("http://apiexchangerates.azurewebsites.net")
+                };
                 var controller = "/api/Rates";
-
+                var response = await client.GetAsync(controller);
+                var result = await response.Content.ReadAsStringAsync();
+                if (!response.IsSuccessStatusCode)
+                {
+                    IsRunning = false;
+                    Result = result;
+                }
+                var rates = JsonConvert.DeserializeObject<List<Rate>>(result);
+                Rates = new ObservableCollection<Rate>(rates);
+                IsRunning = false;
+                IsEnabled = true;
+// Console.WriteLine("Pene");
+                Result = "Ready to convert! :D";
             }
             catch (Exception ex)
             {
                 IsRunning = false;
                 Result = ex.Message;
-
             }
         }
         #endregion
