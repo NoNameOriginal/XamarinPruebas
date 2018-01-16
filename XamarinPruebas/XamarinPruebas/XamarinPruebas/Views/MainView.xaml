@@ -18,39 +18,88 @@
                 FontAttributes="Italic"
                 FontSize="Large"
                 HorizontalOptions="Center"
-                Text="Xamarin Pruebas">
+                Text="Xamarin Pruebas"
+                Margin="10">
             </Label>
-            <Label
-                Text="Amount:">
-            </Label>
-            <Entry
-                Keyboard ="Numeric"
-                Text="{Binding Amount, Mode=TwoWay}"
-                Placeholder="Enter the amount to convert">
-            </Entry>
-            <Label Text="Source rate:">
-            </Label>
-            <Picker
-                ItemDisplayBinding="{Binding FullData}"
-                ItemsSource="{Binding Rates}"
-                SelectedItem="{Binding SourceRate, Mode=TwoWay}"
-                Title="Select a source rate">
-            </Picker>
-            <Label Text="Source rate:">
-            </Label>
-            <Picker
-                ItemDisplayBinding="{Binding FullData}"
-                ItemsSource="{Binding Rates}"
-                SelectedItem="{Binding TargetRate, Mode=TwoWay}"
-                Title="Select a target rate">
-            </Picker>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width=".3*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width=".5*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label
+                    Grid.Column="0"
+                    Grid.Row="0"
+                    Text="Amount:"
+                    VerticalOptions="Center">
+                </Label>
+                <Entry
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    Keyboard ="Numeric"
+                    Text="{Binding Amount, Mode=TwoWay}"
+                    Placeholder="Enter the amount to convert">
+                </Entry>
+                <Label
+                    Grid.Column="0"
+                    Grid.Row="1"
+                    Text="Source rate:"
+                    VerticalOptions="Center">
+                </Label>
+                <Picker
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    ItemDisplayBinding="{Binding FullData}"
+                    ItemsSource="{Binding Rates}"
+                    SelectedItem="{Binding SourceRate, Mode=TwoWay}"
+                    Title="Select a source rate">
+                </Picker>
+                <Label 
+                    Grid.Column="0"
+                    Grid.Row="2"
+                    Text="Source rate:"
+                    VerticalOptions="Center">
+                </Label>
+                <Picker
+                    Grid.Column="1"
+                    Grid.Row="2"
+                    ItemDisplayBinding="{Binding FullData}"
+                    ItemsSource="{Binding Rates}"
+                    SelectedItem="{Binding TargetRate, Mode=TwoWay}"
+                    Title="Select a target rate">
+                </Picker>
+                <Image
+                    Grid.Column="2"
+                    Grid.Row="1"
+                    Grid.RowSpan="2"
+                    HeightRequest="40"
+                    Source="cambio.png"
+                    WidthRequest="40">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding ChangeCommand}">
+                        </TapGestureRecognizer>
+                    </Image.GestureRecognizers>
+                </Image>
+            </Grid>
             <ActivityIndicator
                 IsRunning="{Binding IsRunning, Mode=TwoWay}">
             </ActivityIndicator>
             <Button
-                Command="{Binding ConvertCommand}"
-                Text="Hola"
-                >
+                Command="{Binding ConvertCommmand}"
+                BackgroundColor="Navy"
+                BorderRadius="25"
+                HeightRequest="50"
+                FontAttributes="Bold"
+                IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                Text="Convert"
+                TextColor="White">
             </Button>
             <Label
                 BackgroundColor="Silver"

@@ -128,4 +128,7 @@
       <Name>XamarinPruebas</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\cambio.png" />
+  </ItemGroup>
 </Project>
