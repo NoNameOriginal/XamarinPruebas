@@ -1,5 +1,6 @@
-﻿using System.Globalization;
-using XamarinPruebas.Interfaces;
+﻿using Xamarin.Forms;
+
+[assembly: Dependency(typeof(XamarinPruebas.Droid.Implementations.Localize))]
 
 namespace XamarinPruebas.Droid.Implementations
 {

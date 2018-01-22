@@ -127,8 +127,7 @@
     <value>Debes ingresar un valor numérico en cantidad.</value>
   </data>
   <data name="AmountPlaceHolder" xml:space="preserve">
-    <value>Cantidad:
-Ingrese cantidad…</value>
+    <value>Ingrese cantidad…</value>
   </data>
   <data name="AmountValidation" xml:space="preserve">
     <value>Debes ingresar un valor en cantidad.</value>

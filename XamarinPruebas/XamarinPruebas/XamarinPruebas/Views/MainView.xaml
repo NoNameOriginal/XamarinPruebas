@@ -2,6 +2,7 @@
 <ContentPage 
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:i18n="clr-namespace:XamarinPruebas.Helpers"
     x:Class="XamarinPruebas.Views.MainView"
     BindingContext="{Binding Main, Source={StaticResource Locator}}"
     >
@@ -18,7 +19,7 @@
                 FontAttributes="Italic"
                 FontSize="Large"
                 HorizontalOptions="Center"
-                Text="Xamarin Pruebas"
+                Text="{i18n:Translate Title}"
                 Margin="10">
             </Label>
             <Grid>
@@ -28,14 +29,14 @@
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width=".3*"></ColumnDefinition>
+                    <ColumnDefinition Width=".5*"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                     <ColumnDefinition Width=".5*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Label
                     Grid.Column="0"
                     Grid.Row="0"
-                    Text="Amount:"
+                    Text="{i18n:Translate AmountLabel}"
                     VerticalOptions="Center">
                 </Label>
                 <Entry
@@ -44,12 +45,12 @@
                     Grid.ColumnSpan="2"
                     Keyboard ="Numeric"
                     Text="{Binding Amount, Mode=TwoWay}"
-                    Placeholder="Enter the amount to convert">
+                    Placeholder="{i18n:Translate AmountPlaceHolder}">
                 </Entry>
                 <Label
                     Grid.Column="0"
                     Grid.Row="1"
-                    Text="Source rate:"
+                    Text="{i18n:Translate SourceRateLabel}"
                     VerticalOptions="Center">
                 </Label>
                 <Picker
@@ -58,12 +59,12 @@
                     ItemDisplayBinding="{Binding FullData}"
                     ItemsSource="{Binding Rates}"
                     SelectedItem="{Binding SourceRate, Mode=TwoWay}"
-                    Title="Select a source rate">
+                    Title="{i18n:Translate SourceRateTitle}">
                 </Picker>
                 <Label 
                     Grid.Column="0"
                     Grid.Row="2"
-                    Text="Source rate:"
+                    Text="{i18n:Translate TargetRateLabel}"
                     VerticalOptions="Center">
                 </Label>
                 <Picker
@@ -72,7 +73,7 @@
                     ItemDisplayBinding="{Binding FullData}"
                     ItemsSource="{Binding Rates}"
                     SelectedItem="{Binding TargetRate, Mode=TwoWay}"
-                    Title="Select a target rate">
+                    Title="{i18n:Translate TargetRateTitle}">
                 </Picker>
                 <Image
                     Grid.Column="2"
@@ -92,13 +93,13 @@
                 IsRunning="{Binding IsRunning, Mode=TwoWay}">
             </ActivityIndicator>
             <Button
-                Command="{Binding ConvertCommmand}"
+                Command="{Binding ConvertCommand}"
                 BackgroundColor="Navy"
                 BorderRadius="25"
                 HeightRequest="50"
                 FontAttributes="Bold"
                 IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
-                Text="Convert"
+                Text="{i18n:Translate Convert}"
                 TextColor="White">
             </Button>
             <Label
@@ -110,6 +111,10 @@
                 TextColor="Black"
                 VerticalTextAlignment="Center"
                 VerticalOptions="FillAndExpand">
+            </Label>
+            <Label
+                HorizontalOptions="Center"
+                Text="{Binding Status, Mode=TwoWay}">
             </Label>
         </StackLayout>
     </ContentPage.Content>
